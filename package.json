@@ -1,6 +1,6 @@
 {
   "name": "hello-javascript-atm-machine",
-  "version": "3.0.0",
+  "version": "5.0.3",
   "description": "",
   "main": "index.js",
   "type": "module",

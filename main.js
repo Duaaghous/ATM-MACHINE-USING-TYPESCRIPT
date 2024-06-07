@@ -1,51 +1,57 @@
+#! /usr/bin/env node
 import inquirer from "inquirer";
-let mybalance = 20000; //money in Doller apne hisab se rakhe
-let pincode = 1234; //pincode apne hisab se rakhe
-console.log("your balance is 20000");
+let mybalance = 20000; // Initial balance
+let pincode = 1234; // Pincode
+console.log("Your balance is $20000");
 let pinAns = await inquirer.prompt([
     {
         name: "pin",
-        message: "enter your pin",
+        message: "Enter your pin",
         type: "number"
     }
 ]);
-if (pinAns.pin == pincode) {
-    console.log("valid! \nproceed................");
-    let operationAns = await inquirer.prompt([{
+if (pinAns.pin === pincode) {
+    console.log("Valid! \nProceeding................");
+    let operationAns = await inquirer.prompt([
+        {
             name: "operation",
-            message: "please select option",
+            message: "Please select an option",
             type: "list",
-            choices: ["withdraw", "check balance ", "add money"]
-        }]);
-    console.log(operationAns);
+            choices: ["withdraw", "check balance", "add money"]
+        }
+    ]);
     if (operationAns.operation === "withdraw") {
-        let ammountAns = await inquirer.prompt([
+        let amountAns = await inquirer.prompt([
             {
                 name: "amount",
                 type: "list",
-                message: "Please select withdraw amount: ",
-                choices: ["1000", "2000", "3000", "4000", "5000", "7000", "10000", "15000", "20000"]
-            },
+                message: "Please enter the amount to withdraw: ",
+                choices: ["1000", "4000", "6000", "12000", "15000", "20000", "26000"],
+            }
         ]);
-        console.log(ammountAns.amount);
-        mybalance -= ammountAns.amount;
-        console.log("your balance is:" + mybalance);
+        if (amountAns.amount > mybalance) {
+            console.log("Insufficient balance");
+        }
+        else {
+            mybalance -= amountAns.amount;
+            console.log("Withdrawal successful. Your balance is: $" + mybalance);
+        }
     }
     else if (operationAns.operation === "check balance") {
-        console.log("your balance is:" + mybalance);
+        console.log("Your balance is: $" + mybalance);
     }
     else if (operationAns.operation === "add money") {
-        let ammountAns = await inquirer.prompt([
+        let amountAns = await inquirer.prompt([
             {
                 name: "amount",
                 type: "number",
-                message: "Please select add amount: ",
-            },
+                message: "Please enter the amount to add: ",
+            }
         ]);
-        mybalance += ammountAns.amount;
-        console.log("your total balance is now:" + mybalance);
+        mybalance += amountAns.amount;
+        console.log("Your total balance is now: $" + mybalance);
     }
 }
 else {
-    console.log("invalid! \n  try again");
+    console.log("Invalid pin! Please try again.");
 }
